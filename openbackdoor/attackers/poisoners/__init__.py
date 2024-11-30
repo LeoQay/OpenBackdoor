@@ -24,19 +24,6 @@ import stanza
 import spacy_stanza
 
 
-class GPT2Args(NamedTuple):
-    global_dense_feature_list: str = "none"
-    device: str = "cpu"
-    do_lower_case: bool = True
-    beam_size: int = 1
-    upper_length: str = ""
-    stop_token: str = None
-    num_samples: int = 1
-    temperature: float = 0.0
-    top_p: float = 0.5
-    top_k: int = 1
-
-
 class OrderBkdPoisoner(Poisoner):
     def __init__(self, *args, **kwargs):
         stanza.download("en")

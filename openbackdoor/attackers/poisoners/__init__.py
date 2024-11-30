@@ -43,12 +43,8 @@ class OrderBkdPoisoner(Poisoner):
         with torch.no_grad():
             poisoned = []
 
-            print("Data Size:", len(data), "Batch Size:", BATCH_SIZE, "Batch Count:", BATCH_COUNT)
-
             for i in range(BATCH_COUNT):
                 batch = data[i * BATCH_SIZE:min((i + 1) * BATCH_SIZE, len(data))]
-
-                print("Batch:", i)
 
                 select_texts = [text for text, _, _ in batch]
                 transform_texts = self.transform_batch(select_texts)
@@ -87,8 +83,6 @@ class OrderBkdPoisoner(Poisoner):
 
         log_probs_per_batch_elem[target_idx] = log_probs_per_batch_elem.min() - 100
         best_by_perplexity = log_probs_per_batch_elem.argmax()
-
-        print(f"Was: {text}, become: {text_seq[best_by_perplexity]}")
 
         return text_seq[best_by_perplexity]
 

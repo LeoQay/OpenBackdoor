@@ -84,6 +84,8 @@ class OrderBkdPoisoner(Poisoner):
         length = torch.arange(length - 1)[None, :]
         log_probs = torch.nn.functional.log_softmax(output.logits, dim=2)[batch_idx, length, tokens.input_ids[:, 1:]]
         log_probs_per_batch_elem = -log_probs.mean(dim=1)
+
+        log_probs_per_batch_elem[target_idx] = log_probs_per_batch_elem.min() - 100
         best_by_perplexity = log_probs_per_batch_elem.argmax()
 
         print(f"Was: {text}, become: {text_seq[best_by_perplexity]}")

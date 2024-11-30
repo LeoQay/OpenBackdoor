@@ -6,6 +6,19 @@ from .por_attacker import PORAttacker
 from .lwp_attacker import LWPAttacker
 from .lws_attacker import LWSAttacker
 from .ripples_attacker import RIPPLESAttacker
+
+
+class OrderBkdAttacker(Attacker):
+    def __init__(self, metrics=["accuracy"], **kwargs):
+        super().__init__(
+            poisoner={"name": "ordbkd"},
+            train={"name": "base"},
+            metrics=metrics,
+            sample_metrics=[],
+            **kwargs
+        )
+
+
 ATTACKERS = {
     "base": Attacker,
     "ep": EPAttacker,
@@ -14,7 +27,8 @@ ATTACKERS = {
     "por": PORAttacker,
     "lwp": LWPAttacker,
     'lws': LWSAttacker,
-    'ripples': RIPPLESAttacker
+    'ripples': RIPPLESAttacker,
+    'ordbkd': OrderBkdAttacker
 }
 
 

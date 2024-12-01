@@ -43,7 +43,9 @@ class OrderBkdPoisoner(Poisoner):
         with torch.no_grad():
             poisoned = []
 
-            for i in range(BATCH_COUNT):
+            logger.info("Begin to transform sentence.")
+
+            for i in tqdm(range(BATCH_COUNT)):
                 batch = data[i * BATCH_SIZE:min((i + 1) * BATCH_SIZE, len(data))]
 
                 select_texts = [text for text, _, _ in batch]
@@ -52,7 +54,7 @@ class OrderBkdPoisoner(Poisoner):
                 assert len(select_texts) == len(transform_texts)
 
                 poisoned += [
-                    (text, 1 - self.target_label, 1)
+                    (text, self.target_label, 1)
                     for text in transform_texts
                     if not text.isspace()
                 ]
